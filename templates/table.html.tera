@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <style>
+          table, th, td {
+            border: 1px solid black;
+          }
+          </style>
+    </head>
+    <body>
+        <div class="container">
+          <script src="sorttable.js"></script>
+          <h1>Scuba Dive Info</h1>
+          <table class="sortable">
+            <thead>
+              <tr>
+                <th>Depth</th>
+                <th>Starting O2</th>
+                <th>Ending O2</th>
+                <th>Location</th>
+                <th>Dive Date</th>
+                <th>Temperature</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for d in dives %}
+              <tr>
+                <th> {{d.depth}} </th>
+                <th> {{d.startingo2}} </th>
+                <th> {{d.endingo2}} </th>
+                <th> {{d.divelocation}} </th>
+                <th> {{d.divedatetime}} </th>
+                <th> {{d.temperature}} </th>
+                <th> {{d.divedescription}} </th>
+              </tr>
+              {% endfor %} 
+            </tbody>
+          </table>
+        </div>
+    </body>
+    <a href="../newdive">add new dive</a>
+</html>
