@@ -1,4 +1,4 @@
-<h1>Scuba Tracker</h1>
+<h1>Enter Scuba Dive Information</h1>
 <form action="/" method="post" accept-charset="utf-8">
 
   <label>Depth:
@@ -17,19 +17,19 @@
     <textarea name="textarea0" rows="1" cols="40">Location of dive.</textarea>
   </label>
   <br /><br />
-  
+
   <label>Description:
     <textarea name="textarea1" rows="10" cols="50">Describe your dive.</textarea>
   </label>
   <br /><br />
 
-  <label>Date-Time:
-    <input name="divedatetime" type="datetime-local" value="1914-12-20 08:00"/>
+  <label>Date:
+    <input name="divedate" type="date" value="2018-07-22"/>
   </label><br /><br />
 
-    <!-- <label>Date:
-    <input name="divedate" type="date" value="1914-12-20"/>
-    </label><br /><br /> -->
+  <label>Date:
+    <input name="divetime" type="time" value="09:00"/>
+  </label><br /><br />
 
   <label>Temperature:
     <input name="temperature" type="number" step="0.01" min="−273.15" value="20.0" />

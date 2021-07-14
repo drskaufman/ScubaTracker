@@ -2,7 +2,13 @@
 -- and other internal bookkeeping. This file is safe to edit, any future
 -- changes will be added to existing projects as new migrations.
 
-
+CREATE TABLE posts (
+  id SERIAL PRIMARY KEY,
+  depth 
+  title VARCHAR NOT NULL,
+  body TEXT NOT NULL,
+  published BOOLEAN NOT NULL DEFAULT 'f'
+)
 
 
 -- Sets up a trigger for the given table to automatically set a column called

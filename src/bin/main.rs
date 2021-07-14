@@ -31,7 +31,8 @@ struct NewDiveForm {
     location: String,
     #[form(field = "textarea1")]
     description: String,
-    divedatetime: NaiveDateTimeForm,
+    divedate: NaiveDateForm,
+    divetime: NaiveTimeForm,
     temperature: f64
 }
 
@@ -68,14 +69,14 @@ fn getfile() -> Option<NamedFile> {
 
 #[post("/", data = "<diveform>")]
 fn diveroute(diveform: Form<NewDiveForm>, connection: DbConn) -> Redirect {
-  
+    
     let new_dive = NewDive 
     {
         depth : diveform.depth,
         startingo2 : diveform.startingo2,
         endingo2 : diveform.endingo2,
         divelocation : diveform.location.clone(),
-        divedatetime : *diveform.divedatetime,
+        divedatetime : chrono::NaiveDateTime::new(*diveform.divedate,*diveform.divetime),
         temperature : diveform.temperature,
         divedescription : diveform.description.clone()
     };
