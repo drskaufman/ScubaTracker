@@ -1,13 +1,12 @@
 
-extern crate dblib;
+extern crate scubalib;
 
 extern crate diesel;
 
 use diesel::prelude::*;
-use dblib::*;
-use dblib::models::*;
-use std::time::SystemTime;
-
+use scubalib::*;
+use scubalib::models::*;
+use chrono::Utc;
 
 fn main() {
 
@@ -18,12 +17,12 @@ fn main() {
     diesel::delete(dive).execute(&*connection).expect("Error deleting posts");
 
      // Create personal login
-     let sample_dive = NewDive {
+    let sample_dive = NewDive {
         depth: 50.0,
         startingo2: 5.0,
         endingo2: 1.0,
         divelocation: "Jamaica".to_string(),
-        divedatetime : SystemTime::now(),
+        divedatetime : Utc::now().naive_utc(),
         temperature: 58.0,
         divedescription: "Took Awhile".to_string()
     };

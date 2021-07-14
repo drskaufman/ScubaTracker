@@ -5,15 +5,14 @@
 extern crate rocket;
 
 extern crate diesel; 
-extern crate dblib;
+extern crate scubalib;
 extern crate rocket_contrib;
 extern crate tera;
-
-use std::time::SystemTime;
+extern crate chrono;
 
 use diesel::prelude::*;
-use dblib::*;
-use dblib::models::*;
+use scubalib::*;
+use scubalib::models::*;
 
 use rocket_contrib::templates::Template;
 use rocket::response::NamedFile;
@@ -22,7 +21,8 @@ use rocket::response::Redirect;
 
 use tera::Context;
 
-#[derive(Debug, FromForm)]
+
+#[derive(FromForm)]
 struct NewDiveForm {
     depth: f64,
     startingo2: f64,
@@ -31,6 +31,7 @@ struct NewDiveForm {
     location: String,
     #[form(field = "textarea1")]
     description: String,
+    divedatetime: NaiveDateTimeForm,
     temperature: f64
 }
 
@@ -55,7 +56,6 @@ fn index(connection: DbConn) -> Template {
     Template::render("table", context.into_json())
 }
 
-
 #[get("/newdive")]
 fn newdiveentry() -> Option<NamedFile> {
     NamedFile::open("static/index.html").ok()
@@ -68,15 +68,14 @@ fn getfile() -> Option<NamedFile> {
 
 #[post("/", data = "<diveform>")]
 fn diveroute(diveform: Form<NewDiveForm>, connection: DbConn) -> Redirect {
-    let todays_time = SystemTime::now();
-    
+  
     let new_dive = NewDive 
     {
         depth : diveform.depth,
         startingo2 : diveform.startingo2,
         endingo2 : diveform.endingo2,
         divelocation : diveform.location.clone(),
-        divedatetime : todays_time,
+        divedatetime : *diveform.divedatetime,
         temperature : diveform.temperature,
         divedescription : diveform.description.clone()
     };

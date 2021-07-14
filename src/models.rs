@@ -1,5 +1,5 @@
 use super::schema::dive;
-use std::time::SystemTime;
+use chrono::NaiveDateTime;
 
 #[derive(Debug, Queryable, Serialize)]
 pub struct Dive {
@@ -8,7 +8,7 @@ pub struct Dive {
     pub startingo2: f64,
     pub endingo2: f64,
     pub divelocation: String,
-    pub divedatetime : SystemTime,
+    pub divedatetime : NaiveDateTime,
     pub temperature: f64,
     pub divedescription: String
 }
@@ -20,7 +20,7 @@ pub struct NewDive {
     pub startingo2: f64,
     pub endingo2: f64,
     pub divelocation: String,
-    pub divedatetime : SystemTime,
+    pub divedatetime : NaiveDateTime,
     pub temperature: f64,
     pub divedescription: String
 }
