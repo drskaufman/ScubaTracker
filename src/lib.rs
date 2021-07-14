@@ -44,6 +44,11 @@ pub fn create_db_pool() -> Pool<ConnectionManager<PgConnection>> {
     Pool::new(manager).expect("Failed to create pool.")
 }
 
+
+//Following these notes to implement traits on types I don't own
+// https://stackoverflow.com/questions/25413201/how-do-i-implement-a-trait-i-dont-own-for-a-type-i-dont-own
+// https://github.com/SergioBenitez/Rocket/issues/602#issuecomment-380497269
+
 pub struct DbConn(PooledConnection<ConnectionManager<PgConnection>>);
 
 
@@ -69,11 +74,6 @@ impl Deref for DbConn {
     }
 }
 
-
-
-
-// https://stackoverflow.com/questions/25413201/how-do-i-implement-a-trait-i-dont-own-for-a-type-i-dont-own
-// https://github.com/SergioBenitez/Rocket/issues/602#issuecomment-380497269
 pub struct NaiveDateForm(NaiveDate);
 pub struct NaiveTimeForm(NaiveTime);
 pub struct NaiveDateTimeForm(NaiveDateTime);
