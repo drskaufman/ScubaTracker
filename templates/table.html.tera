@@ -12,6 +12,15 @@
         <div class="container">
           <script src="sorttable.js"></script>
           <h1>Scuba Dive Info</h1>
+          <form action="/filter" method="post" accept-charset="utf-8">
+            <label>filter text:
+              <textarea name="textarea1" rows="10" cols="50">Describe your dive.</textarea>
+            </label>
+            <label>Submit:
+              <input type="submit" value="Submit Filter">
+            </label>
+            <br /><br />
+          </form>
           <table class="sortable">
             <thead>
               <tr>

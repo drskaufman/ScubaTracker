@@ -36,9 +36,16 @@ struct NewDiveForm {
     temperature: f64
 }
 
+#[derive(FromForm)]
+struct NewFilterForm {
+    #[form(field = "textarea1")]
+    filtertext: String,
+}
+
+
 fn main() {
   rocket::ignite().manage(create_db_pool())
-    .mount("/", routes![index, newdiveentry, diveroute, getfile])
+    .mount("/", routes![index, newdiveentry, diveroute, getfile, filterroute])
     .attach(Template::fairing())
     .launch();
 }
@@ -65,6 +72,21 @@ fn newdiveentry() -> Option<NamedFile> {
 #[get("/sorttable.js")]
 fn getfile() -> Option<NamedFile> {
     NamedFile::open("static/sorttable.js").ok()
+}
+
+#[post("/filter", data = "<filterform>")]
+fn filterroute(filterform: Form<NewFilterForm>, connection:DbConn) -> Template 
+{
+    let mut context = Context::new();
+
+    use schema::dive::dsl::*;
+    let dive_list = dive.load::<Dive>(&*connection).expect("Error Loading Dives");
+    let filtered_dives = dive_list.iter().filter(|x| x.divedescription.contains(&filterform.filtertext));
+    
+    let filetered_dive_vector : Vec<&Dive> = filtered_dives.collect();
+    context.insert("dives", &filetered_dive_vector);
+
+    Template::render("table", context.into_json())
 }
 
 #[post("/", data = "<diveform>")]
